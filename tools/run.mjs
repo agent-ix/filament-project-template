@@ -71,6 +71,8 @@ export function parseManifest(text, where = "example.toml") {
       need("waits_on", "string");
       if (!/^[A-Z]+-\d+$/.test(c.waits_on)) throw new Error(`${where}: case ${c.id}: waits_on must be a ticket id such as QSL-123`);
       need("why", "string");
+      need("needs", "string");
+      if (c.needs.trim() === "") throw new Error(`${where}: case ${c.id}: needs must be a short phrase a newcomer understands`);
       if (c.ready_exit === c.expect_exit) throw new Error(`${where}: case ${c.id}: ready_exit equals expect_exit`);
     }
   }
@@ -90,7 +92,7 @@ export function promoteText(text, id, verdict) {
   if (!ready) throw new Error(`case ${id} has no ready_exit`);
   const out = [];
   for (const l of block) {
-    if (/^(ready_exit|waits_on|why) = /.test(l)) continue;
+    if (/^(ready_exit|waits_on|why|needs) = /.test(l)) continue;
     if (l.startsWith("status = ")) out.push('status = "running"');
     else if (l.startsWith("expect_exit = ")) {
       out.push(`expect_exit = ${ready.slice("ready_exit = ".length)}`);
@@ -317,6 +319,7 @@ export function buildIndex(systems, root) {
         verdict: c.expect_verdict ?? null,
         exit: c.expect_exit,
         waits_on: c.waits_on ?? null,
+        needs: c.needs ?? null,
       });
     }
   }
