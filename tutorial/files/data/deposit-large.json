@@ -1,0 +1,38 @@
+{
+  "format": "quire.state.invocation/v1",
+  "identity": {
+    "authority": "project",
+    "identity": "ix://my/project/data/deposit-large"
+  },
+  "model": {
+    "identity": "my/project"
+  },
+  "context": "ix://my/project/Account",
+  "operation": "deposit",
+  "self": {
+    "population": "ix://my/project/accounts",
+    "key": "a1"
+  },
+  "pre": {
+    "identity": {
+      "authority": "project",
+      "identity": "ix://my/project/data/before-withdraw"
+    }
+  },
+  "post": {
+    "identity": {
+      "authority": "project",
+      "identity": "ix://my/project/data/before-withdraw"
+    }
+  },
+  "parameters": {
+    "amount": {
+      "integer": "600"
+    }
+  },
+  "result": {
+    "boolean": true
+  },
+  "created": [],
+  "deleted": []
+}

@@ -1,6 +1,8 @@
 name: Check
 
-# Manual only: CI minutes are not spent on push. Run it from the Actions tab.
+# Manual only: CI minutes are not spent on push. Run it from the Actions tab. When
+# a trigger other than workflow_dispatch is added, the image falls back to the
+# default below.
 on:
   workflow_dispatch:
     inputs:
@@ -23,5 +25,12 @@ jobs:
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
       - name: Check the project in the toolchain image
         env:
-          IMAGE: ${{ inputs.image }}
+          IMAGE: ${{ inputs.image || 'ghcr.io/agent-ix/filament-toolchain:latest' }}
         run: docker run --rm --volume "$PWD:/work" --workdir /work "$IMAGE" make check staged
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run the tutorial steps and compare their output
+        env:
+          IMAGE: ${{ inputs.image || 'ghcr.io/agent-ix/filament-toolchain:latest' }}
+        run: make test tutorial-test IMAGE="$IMAGE"

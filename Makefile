@@ -5,7 +5,7 @@ NODE ?= node
 RUN = $(NODE) tools/run.mjs
 SYSTEM = system
 
-.PHONY: check staged record models
+.PHONY: check staged record models test tutorial-test tutorial-record
 # Run every running case and compare it with its recorded result.
 check:
 	@$(RUN) check $(SYSTEM)
@@ -19,3 +19,17 @@ record:
 # Regenerate the model from its description (interim, see README.md).
 models:
 	$(NODE) tools/model.mjs $(SYSTEM)/model/account.mjs $(SYSTEM)/model/project.semantic-ir.json
+
+# Unit checks of the tutorial files and the steps runner. They need no driver.
+test:
+	$(NODE) --test tutorial/*.test.mjs
+
+# Run tutorial/steps.md in a fresh copy of this project inside the toolchain
+# image, and compare the output of each step with tutorial/expected (needs
+# Docker). tutorial-record writes tutorial/expected from the real output.
+IMAGE ?= ghcr.io/agent-ix/filament-toolchain:latest
+STEPS_SHELL ?= bash
+tutorial-test:
+	$(NODE) tools/steps.mjs run tutorial/steps.md --image $(IMAGE) --shell $(STEPS_SHELL) --copy . --expected tutorial/expected
+tutorial-record:
+	$(NODE) tools/steps.mjs run tutorial/steps.md --image $(IMAGE) --shell $(STEPS_SHELL) --copy . --expected tutorial/expected --record

@@ -1,0 +1,7 @@
+system/within-limit: exit 0 ok
+system/over-limit: exit 10 ok
+system/withdraw-right: exit 0 ok
+system/withdraw-wrong: exit 10 ok
+system/deposit-small: exit 0 ok
+system/deposit-large: exit 10 ok
+check: 6 passed, 0 failed

@@ -1,0 +1,20 @@
+
+[[case]]
+id = "deposit-small"
+rule = "DepositWithinLimit"
+statement = "A deposit never takes the balance above the limit."
+file = "rules/account.fsl"
+command = "run requests/deposit-small.json"
+status = "running"
+expect_exit = 0
+expect_verdict = "holds"
+
+[[case]]
+id = "deposit-large"
+rule = "DepositWithinLimit"
+statement = "A deposit never takes the balance above the limit."
+file = "rules/account.fsl"
+command = "run requests/deposit-large.json"
+status = "running"
+expect_exit = 10
+expect_verdict = "violated"
