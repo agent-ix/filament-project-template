@@ -62,6 +62,7 @@ You need Docker and a GitHub account.
    system/withdraw-right: exit 0 ok
    system/withdraw-wrong: exit 10 ok
    check: 3 passed, 1 failed
+   make: *** [Makefile:11: check] Error 1
    ```
 
    Put the value back with `sed -i 's/"1500"/"500"/' system/data/within-limit.json`.
