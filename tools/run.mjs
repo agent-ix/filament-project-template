@@ -329,11 +329,11 @@ export function buildIndex(systems, root) {
 // Stale generated files, as messages. Writes them when `write` is set.
 export function syncGenerated(systems, root, write, log = console) {
   const problems = [];
-  for (const f of syncReadmes(systems, write)) problems.push(`${relative(root, f)}: recorded output is stale; run make readme`);
+  for (const f of syncReadmes(systems, write)) problems.push(`${relative(root, f)}: recorded output is stale: merge origin/main, then run make readme`);
   const indexFile = join(root, "index.json");
   const next = buildIndex(systems, root);
   if (!existsSync(indexFile) || readFileSync(indexFile, "utf8") !== next) {
-    problems.push("index.json is stale; run make index");
+    problems.push("index.json is stale: merge origin/main, then run make index");
     if (write) writeFileSync(indexFile, next);
   }
   if (write) log.log(`wrote ${problems.length} generated file(s)`);

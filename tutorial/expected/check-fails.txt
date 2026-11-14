@@ -1,0 +1,6 @@
+system/within-limit: exit 10, expected 0
+system/over-limit: exit 10 ok
+system/withdraw-right: exit 0 ok
+system/withdraw-wrong: exit 10 ok
+check: 3 passed, 1 failed
+make: *** [Makefile:11: check] Error 1

@@ -96,19 +96,21 @@ Each folder of the project holds one kind of file.
 | `system/rules/` | FSL source |
 | `system/data/`, `system/requests/` | Snapshots and one request file per case |
 | `system/expected/` | Recorded driver output for each case |
-| `tools/` | The case runner and the model generator |
+| `tools/` | The case runner, the model generator and the steps runner |
 
 ## Use a release binary
 
-You can run the checks without Docker. Install the driver as `fsl` from a [quire-driver release](https://github.com/agent-ix/quire-driver/releases), with Node.js 20 or later and `make`. The [install steps](https://github.com/agent-ix/filament-examples/blob/main/install-test/steps.md) list each command, including the checksum check.
+You can run the checks without Docker. Install the driver as `fsl` from a [filament-driver release](https://github.com/agent-ix/filament-driver/releases), with Node.js 20 or later and `make`. The [install steps](https://github.com/agent-ix/filament-examples/blob/main/install-test/steps.md) list each command, including the checksum check.
 
 ## Building and testing
 
-The runner [tools/run.mjs](tools/run.mjs) and the generator [tools/model.mjs](tools/model.mjs) are unmodified copies of the files of the same name in [filament-examples](https://github.com/agent-ix/filament-examples/tree/main/tools). A copy keeps the project working offline and in any checkout. To update them, copy the two files again.
+The case runner [tools/run.mjs](tools/run.mjs), the generator [tools/model.mjs](tools/model.mjs) and the steps runner [tools/steps.mjs](tools/steps.mjs) are unmodified copies of the files of the same name in [filament-examples](https://github.com/agent-ix/filament-examples/tree/main/tools). A copy keeps the project working offline and in any checkout. To update them, copy the files again.
 
 The Makefile reads the driver path from the variable `FSL`, set in [config.mk](config.mk). Its default is `fsl`, which the toolchain image provides. To use a driver you built yourself, run `make check FSL=/path/to/driver`.
 
-The [check workflow](.github/workflows/check.yml) runs `make check staged` in the image. It starts from the Actions tab.
+The commands of the first-project tutorial are in [tutorial/steps.md](tutorial/steps.md), with the recorded output of each step in `tutorial/expected`. `make tutorial-test` runs every step in the toolchain image, in a fresh copy of the project, and compares the output with the recorded files. `make tutorial-record` writes the recorded files again. `make test` checks the tutorial files and needs no Docker.
+
+The [check workflow](.github/workflows/check.yml) runs `make check staged` in the image. It also runs the tutorial test. It starts from the Actions tab.
 
 ## Contributing
 

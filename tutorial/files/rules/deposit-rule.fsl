@@ -1,0 +1,5 @@
+
+// A deposit never takes the balance above the limit.
+pre DepositWithinLimit using v on Project::Account::deposit {
+  self.balance + amount <= self.limit
+}
