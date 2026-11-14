@@ -99,6 +99,10 @@ Each folder of the project holds one kind of file.
 | `system/expected/` | Recorded driver output for each case |
 | `tools/` | The case runner and the model generator |
 
+## Use a release binary
+
+You can run the checks without Docker. Install the driver as `fsl` from a [quire-driver release](https://github.com/agent-ix/quire-driver/releases), with Node.js 20 or later and `make`. The [install steps](https://github.com/agent-ix/filament-examples/blob/main/install-test/steps.md) list each command, including the checksum check.
+
 ## Building and testing
 
 The runner [tools/run.mjs](tools/run.mjs) and the generator [tools/model.mjs](tools/model.mjs) are unmodified copies of the files of the same name in [filament-examples](https://github.com/agent-ix/filament-examples/tree/main/tools). A copy keeps the project working offline and in any checkout. To update them, copy the two files again.
