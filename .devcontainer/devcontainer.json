@@ -1,0 +1,5 @@
+{
+  "name": "Filament project",
+  "image": "ghcr.io/agent-ix/filament-toolchain:latest",
+  "postCreateCommand": "fsl --version"
+}

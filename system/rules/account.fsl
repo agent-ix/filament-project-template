@@ -1,0 +1,13 @@
+language "ix:native" edition "1-draft";
+profile v = "quire.model.complete/v1";
+model Project = "my/project";
+
+// The balance of an account never exceeds its limit.
+invariant WithinLimit using v on Project::Account at current {
+  self.balance <= self.limit
+}
+
+// A withdrawal never raises the balance.
+post WithdrawNeverRaises using v on Project::Account::withdraw {
+  self.balance <= pre(self.balance)
+}

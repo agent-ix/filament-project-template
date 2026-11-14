@@ -1,0 +1,45 @@
+{
+  "format": "native-run/1",
+  "request": {
+    "models": [
+      {
+        "format": "semantic-ir/2.0.0",
+        "source": {
+          "file": "../model/project.semantic-ir.json",
+          "authority": "project",
+          "identity": "project:model",
+          "document": "model",
+          "formal_revision": 1
+        }
+      }
+    ],
+    "program": {
+      "source": {
+        "file": "../rules/account.fsl",
+        "authority": "project",
+        "identity": "project:account",
+        "document": "account",
+        "formal_revision": 1
+      }
+    },
+    "clause": {
+      "selection": {
+        "clause": {
+          "name": "WithinLimit",
+          "observation": "current",
+          "self": {
+            "population": "ix://my/project/accounts",
+            "key": "a1"
+          },
+          "anchor": {
+            "kind": "handler",
+            "name": "validate"
+          }
+        }
+      },
+      "observations": {
+        "current": "../data/within-limit.json"
+      }
+    }
+  }
+}

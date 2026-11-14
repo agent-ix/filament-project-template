@@ -1,0 +1,31 @@
+{
+  "format": "quire.state.snapshot/v1",
+  "identity": {
+    "authority": "project",
+    "identity": "ix://my/project/data/before-withdraw"
+  },
+  "model": {
+    "identity": "my/project"
+  },
+  "observation": "pre",
+  "populations": [
+    {
+      "population": "ix://my/project/accounts",
+      "complete": true,
+      "objects": [
+        {
+          "key": "a1",
+          "type": "ix://my/project/Account",
+          "fields": {
+            "balance": {
+              "integer": "500"
+            },
+            "limit": {
+              "integer": "1000"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

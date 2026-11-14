@@ -1,0 +1,273 @@
+{
+  "contractVersion": "2.0.0",
+  "canonicalization": {
+    "algorithm": "rfc8785-v1"
+  },
+  "source": {
+    "identity": "ix://my/project/spec",
+    "version": "1.0.0",
+    "dialect": "spec-bundle"
+  },
+  "package": {
+    "identity": "my/project",
+    "version": "1.0.0",
+    "mappingVersions": [],
+    "profileVersions": []
+  },
+  "occurrences": [],
+  "extensions": [],
+  "constructs": [
+    {
+      "kind": {
+        "module": "my/project",
+        "name": "object_type"
+      },
+      "moduleVersion": "1.0.0",
+      "construct": {
+        "identity": "none",
+        "shape": "record",
+        "members": {},
+        "meaning": "quire.meaning.model.object-type/v1"
+      }
+    },
+    {
+      "kind": {
+        "module": "my/project",
+        "name": "population"
+      },
+      "moduleVersion": "1.0.0",
+      "construct": {
+        "identity": "none",
+        "shape": "record",
+        "members": {},
+        "meaning": "quire.meaning.model.population/v1"
+      }
+    },
+    {
+      "kind": {
+        "module": "my/project",
+        "name": "value_type"
+      },
+      "moduleVersion": "1.0.0",
+      "construct": {
+        "identity": "none",
+        "shape": "record",
+        "members": {},
+        "meaning": "quire.meaning.model.value-type/v1"
+      }
+    }
+  ],
+  "types": [
+    {
+      "identity": "ix://my/project/Money",
+      "displayName": "Money",
+      "kind": {
+        "module": "my/project",
+        "name": "value_type"
+      },
+      "roles": [],
+      "origin": {
+        "generated": {
+          "generatorIdentity": "ix://my/project/Money",
+          "generatorVersion": "1.0.0",
+          "inputIdentities": [
+            "ix://my/project/Money"
+          ]
+        }
+      },
+      "extensions": [],
+      "unknownPolicy": "reject",
+      "scalar": "integer",
+      "constraints": [
+        {
+          "identity": "ix://my/project/Money/constraints/min",
+          "keyword": "min",
+          "operands": {
+            "value": "0"
+          },
+          "appliesTo": "ix://quire/native/Integer",
+          "diagnosticCode": "bound.min",
+          "origin": {
+            "generated": {
+              "generatorIdentity": "ix://my/project/Money",
+              "generatorVersion": "1.0.0",
+              "inputIdentities": [
+                "ix://my/project/Money"
+              ]
+            }
+          }
+        },
+        {
+          "identity": "ix://my/project/Money/constraints/max",
+          "keyword": "max",
+          "operands": {
+            "value": "1000000"
+          },
+          "appliesTo": "ix://quire/native/Integer",
+          "diagnosticCode": "bound.max",
+          "origin": {
+            "generated": {
+              "generatorIdentity": "ix://my/project/Money",
+              "generatorVersion": "1.0.0",
+              "inputIdentities": [
+                "ix://my/project/Money"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "identity": "ix://my/project/Account",
+      "displayName": "Account",
+      "kind": {
+        "module": "my/project",
+        "name": "object_type"
+      },
+      "roles": [],
+      "origin": {
+        "generated": {
+          "generatorIdentity": "ix://my/project/Account",
+          "generatorVersion": "1.0.0",
+          "inputIdentities": [
+            "ix://my/project/Account"
+          ]
+        }
+      },
+      "constraints": [],
+      "extensions": [],
+      "unknownPolicy": "reject",
+      "supertypes": [],
+      "fields": [
+        {
+          "identity": "ix://my/project/Account/balance",
+          "name": "balance",
+          "typeRef": "ix://my/project/Money",
+          "presence": "required",
+          "nullable": false,
+          "defaultKind": "none",
+          "multiplicity": {
+            "lower": 1,
+            "upper": 1,
+            "ordered": false,
+            "unique": true
+          },
+          "origin": {
+            "generated": {
+              "generatorIdentity": "ix://my/project/Account/balance",
+              "generatorVersion": "1.0.0",
+              "inputIdentities": [
+                "ix://my/project/Account/balance"
+              ]
+            }
+          }
+        },
+        {
+          "identity": "ix://my/project/Account/limit",
+          "name": "limit",
+          "typeRef": "ix://my/project/Money",
+          "presence": "required",
+          "nullable": false,
+          "defaultKind": "none",
+          "multiplicity": {
+            "lower": 1,
+            "upper": 1,
+            "ordered": false,
+            "unique": true
+          },
+          "origin": {
+            "generated": {
+              "generatorIdentity": "ix://my/project/Account/limit",
+              "generatorVersion": "1.0.0",
+              "inputIdentities": [
+                "ix://my/project/Account/limit"
+              ]
+            }
+          }
+        }
+      ],
+      "operations": [
+        {
+          "identity": "ix://my/project/Account/withdraw",
+          "name": "withdraw",
+          "params": [
+            {
+              "identity": "ix://my/project/Account/withdraw/amount",
+              "name": "amount",
+              "typeRef": "ix://my/project/Money",
+              "presence": "required",
+              "nullable": false,
+              "defaultKind": "none",
+              "multiplicity": {
+                "lower": 1,
+                "upper": 1,
+                "ordered": false,
+                "unique": true
+              },
+              "origin": {
+                "generated": {
+                  "generatorIdentity": "ix://my/project/Account/withdraw/amount",
+                  "generatorVersion": "1.0.0",
+                  "inputIdentities": [
+                    "ix://my/project/Account/withdraw/amount"
+                  ]
+                }
+              }
+            }
+          ],
+          "returns": {
+            "typeRef": "ix://quire/native/Boolean",
+            "multiplicity": {
+              "lower": 1,
+              "upper": 1,
+              "ordered": false,
+              "unique": true
+            },
+            "nullable": false
+          },
+          "pre": [],
+          "post": [],
+          "origin": {
+            "generated": {
+              "generatorIdentity": "ix://my/project/Account/withdraw",
+              "generatorVersion": "1.0.0",
+              "inputIdentities": [
+                "ix://my/project/Account/withdraw"
+              ]
+            }
+          },
+          "frame": {
+            "modifies": [
+              "ix://my/project/Account/balance"
+            ],
+            "creates": [],
+            "deletes": []
+          }
+        }
+      ]
+    }
+  ],
+  "populations": [
+    {
+      "identity": "ix://my/project/accounts",
+      "displayName": "accounts",
+      "kind": {
+        "module": "my/project",
+        "name": "population"
+      },
+      "members": [
+        "ix://my/project/Account"
+      ],
+      "extent": "closed",
+      "origin": {
+        "generated": {
+          "generatorIdentity": "ix://my/project/accounts",
+          "generatorVersion": "1.0.0",
+          "inputIdentities": [
+            "ix://my/project/accounts"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "format": "native-run/1",
+  "request": {
+    "models": [
+      {
+        "format": "semantic-ir/2.0.0",
+        "source": {
+          "file": "../model/project.semantic-ir.json",
+          "authority": "project",
+          "identity": "project:model",
+          "document": "model",
+          "formal_revision": 1
+        }
+      }
+    ],
+    "program": {
+      "source": {
+        "file": "../rules/account.fsl",
+        "authority": "project",
+        "identity": "project:account",
+        "document": "account",
+        "formal_revision": 1
+      }
+    },
+    "clause": {
+      "selection": {
+        "clause": {
+          "name": "WithdrawNeverRaises",
+          "observation": "invocation"
+        }
+      },
+      "observations": {
+        "invocation": "../data/withdraw-right.json",
+        "pre": "../data/before-withdraw.json",
+        "post": "../data/after-withdraw-right.json"
+      }
+    }
+  }
+}

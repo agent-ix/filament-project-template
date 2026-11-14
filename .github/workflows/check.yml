@@ -1,0 +1,23 @@
+name: Check
+
+# Manual only: CI minutes are not spent on push. Run it from the Actions tab.
+on:
+  workflow_dispatch:
+    inputs:
+      image:
+        description: "Toolchain image to run the checks in."
+        required: false
+        default: ghcr.io/agent-ix/filament-toolchain:latest
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check the project in the toolchain image
+        env:
+          IMAGE: ${{ inputs.image }}
+        run: docker run --rm --volume "$PWD:/work" --workdir /work "$IMAGE" make check staged

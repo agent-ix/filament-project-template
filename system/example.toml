@@ -1,0 +1,44 @@
+# The cases of this project. `make check` runs every running case.
+name = "project"
+summary = "A bank account with a balance and a limit. One rule about data and one rule about the withdraw operation."
+model = "model/project.semantic-ir.json"
+
+[[case]]
+id = "within-limit"
+rule = "WithinLimit"
+statement = "The balance of an account never exceeds its limit."
+file = "rules/account.fsl"
+command = "run requests/within-limit.json"
+status = "running"
+expect_exit = 0
+expect_verdict = "holds"
+
+[[case]]
+id = "over-limit"
+rule = "WithinLimit"
+statement = "The balance of an account never exceeds its limit."
+file = "rules/account.fsl"
+command = "run requests/over-limit.json"
+status = "running"
+expect_exit = 10
+expect_verdict = "violated"
+
+[[case]]
+id = "withdraw-right"
+rule = "WithdrawNeverRaises"
+statement = "A withdrawal never raises the balance."
+file = "rules/account.fsl"
+command = "run requests/withdraw-right.json"
+status = "running"
+expect_exit = 0
+expect_verdict = "holds"
+
+[[case]]
+id = "withdraw-wrong"
+rule = "WithdrawNeverRaises"
+statement = "A withdrawal never raises the balance."
+file = "rules/account.fsl"
+command = "run requests/withdraw-wrong.json"
+status = "running"
+expect_exit = 10
+expect_verdict = "violated"
