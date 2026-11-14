@@ -1,0 +1,25 @@
+name: CLA Assistant Lite
+
+# Enforces the Agent IX CLA on external pull requests to this template repo.
+# The logic lives once in agent-ix/.github; this file only wires the triggers.
+#
+# GitHub copies every file into a project generated from this template, so this
+# file is guarded: the job runs only in agent-ix/filament-project-template and is
+# skipped everywhere else. Projects made from the template should delete it.
+on:
+  pull_request_target:
+    types: [opened, synchronize, closed]
+  issue_comment:
+    types: [created]
+
+permissions:
+  actions: write
+  pull-requests: write
+  issues: write
+  statuses: write
+  contents: write
+
+jobs:
+  cla:
+    if: github.repository == 'agent-ix/filament-project-template'
+    uses: agent-ix/.github/.github/workflows/cla-assistant-lite.yml@main

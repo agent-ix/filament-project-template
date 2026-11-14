@@ -113,7 +113,17 @@ The [check workflow](.github/workflows/check.yml) runs `make check staged` in th
 
 ## Contributing
 
-Open a pull request. [CONTENT_RIGHTS.md](CONTENT_RIGHTS.md) lists what may be committed.
+Contributions to this template need a signed CLA. See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Starting a project from this template
+
+GitHub copies every file in this repository into your new project, and it cannot leave any out. Delete these three files from your project, which apply only to the template repository:
+
+- `CONTRIBUTING.md`
+- `.github/CODEOWNERS`
+- `.github/workflows/cla.yml`
+
+Then replace the license and `CONTENT_RIGHTS.md` with your own.
 
 ## License
 
