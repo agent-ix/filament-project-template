@@ -49,10 +49,9 @@ You need Docker and a GitHub account.
    exit 10
    ```
 
-5. Break the passing data case, and watch the check fail. The command raises the balance of the account above its limit.
+5. Break the passing data case, and watch the check fail. In `system/data/within-limit.json`, change the balance of the account from `"500"` to `"1500"`, which is above the limit of `"1000"`. Then run the check again.
 
    ```
-   sed -i 's/"500"/"1500"/' system/data/within-limit.json
    make check
    ```
 
@@ -65,7 +64,7 @@ You need Docker and a GitHub account.
    make: *** [Makefile:11: check] Error 1
    ```
 
-   Put the value back with `sed -i 's/"1500"/"500"/' system/data/within-limit.json`.
+   Change the balance back to `"500"`.
 
 ## Usage
 
