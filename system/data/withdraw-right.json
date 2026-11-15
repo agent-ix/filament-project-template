@@ -1,5 +1,5 @@
 {
-  "format": "quire.state.invocation/v1",
+  "format": "filament.state.invocation/v1",
   "identity": {
     "authority": "project",
     "identity": "ix://my/project/data/withdraw-right"

@@ -1,5 +1,5 @@
 {
-  "format": "quire.state.snapshot/v1",
+  "format": "filament.state.snapshot/v1",
   "identity": {
     "authority": "project",
     "identity": "ix://my/project/data/after-withdraw-right"

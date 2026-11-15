@@ -27,7 +27,7 @@ const gen = (identity) => ({
   generated: { generatorIdentity: identity, generatorVersion: "1.0.0", inputIdentities: [identity] },
 });
 const NATIVE = { Boolean: 1, Integer: 1, String: 1, UUID: 1, Timestamp: 1 };
-const typeRef = (t) => (NATIVE[t] ? `ix://quire/native/${t}` : id(t));
+const typeRef = (t) => (NATIVE[t] ? `ix://filament/native/${t}` : id(t));
 const one = { lower: 1, upper: 1, ordered: false, unique: true };
 const member = (owner, name, spec) => {
   const s = typeof spec === "string" ? { type: spec } : spec;
@@ -50,7 +50,7 @@ for (const [name, [min, max]] of Object.entries(d.values ?? {})) {
   const identity = id(name);
   const c = (keyword, value) => ({
     identity: `${identity}/constraints/${keyword}`, keyword, operands: { value: String(value) },
-    appliesTo: "ix://quire/native/Integer", diagnosticCode: `bound.${keyword}`, origin: gen(identity),
+    appliesTo: "ix://filament/native/Integer", diagnosticCode: `bound.${keyword}`, origin: gen(identity),
   });
   types.push({
     identity, displayName: name, kind: { module: P, name: "value_type" }, roles: [],
@@ -93,12 +93,12 @@ for (const [name, fields] of Object.entries(d.records ?? {})) {
   });
 }
 const constructs = [
-  construct("object_type", "quire.meaning.model.object-type/v1"),
-  construct("population", "quire.meaning.model.population/v1"),
+  construct("object_type", "filament.meaning.model.object-type/v1"),
+  construct("population", "filament.meaning.model.population/v1"),
 ];
-if (d.records) constructs.push(construct("message", "quire.meaning.model.record-value-type/v1"));
-if (d.values) constructs.push(construct("value_type", "quire.meaning.model.value-type/v1"));
-if (d.enums) constructs.push(construct("variant_type", "quire.meaning.model.variant-type/v1", "enumeration", { variants: "required" }));
+if (d.records) constructs.push(construct("message", "filament.meaning.model.record-value-type/v1"));
+if (d.values) constructs.push(construct("value_type", "filament.meaning.model.value-type/v1"));
+if (d.enums) constructs.push(construct("variant_type", "filament.meaning.model.variant-type/v1", "enumeration", { variants: "required" }));
 const doc = {
   contractVersion: "2.0.0",
   canonicalization: { algorithm: "rfc8785-v1" },

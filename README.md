@@ -45,7 +45,7 @@ You need Docker and a GitHub account.
    ```
 
    ```
-   {"artifacts":[],"category":"violation","diagnostics":[],"format":"quire-outcome/1","items":[{"category":"violation","cause":null,"clause":"WithinLimit","request_index":0,"result":"refuted"}],"last_stage":"S6a","operation":"monitor","result":null}
+   {"artifacts":[],"category":"violation","diagnostics":[],"format":"filament-outcome/1","items":[{"category":"violation","cause":null,"clause":"WithinLimit","request_index":0,"result":"refuted"}],"last_stage":"S6a","operation":"monitor","result":null}
    exit 10
    ```
 
