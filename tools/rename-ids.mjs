@@ -2,7 +2,7 @@
 //   node tools/rename-ids.mjs [--check] [root]
 // The rewrite is mechanical and repeatable: run it again and nothing changes. With --check the files are not
 // written and the exit status is 1 when any file would change. Recorded results, models and the licence data
-// are not rewritten by hand; run `make models record readme index` afterwards so that the driver writes them.
+// are not rewritten by hand; run `make models record tutorial-record` afterwards so that the driver writes them.
 import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";

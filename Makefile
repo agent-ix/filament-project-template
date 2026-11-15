@@ -20,9 +20,9 @@ record:
 models:
 	$(NODE) tools/model.mjs $(SYSTEM)/model/account.mjs $(SYSTEM)/model/project.semantic-ir.json
 
-# Unit checks of the tutorial files and the steps runner. They need no driver.
+# Unit checks of the tutorial files, the steps runner and the tools. They need no driver.
 test:
-	$(NODE) --test tutorial/*.test.mjs
+	$(NODE) --test tutorial/*.test.mjs tools/*.test.mjs
 
 # Run tutorial/steps.md in a fresh copy of this project inside the toolchain
 # image, and compare the output of each step with tutorial/expected (needs
