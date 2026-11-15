@@ -102,7 +102,7 @@ export function promoteText(text, id, verdict) {
   return [...lines.slice(0, start), ...out, ...lines.slice(end)].join("\n");
 }
 
-// A short verdict taken from a quire-outcome/1 document.
+// A short verdict taken from a filament-outcome/1 document.
 export function verdictOf(stdout) {
   let doc;
   try {
@@ -132,11 +132,11 @@ export function runCase(dir, c, fsl) {
 function driverHint(expected, stdout) {
   if (expected === "") return "";
   try {
-    if (JSON.parse(stdout).format === "quire-outcome/1") return "";
+    if (JSON.parse(stdout).format === "filament-outcome/1") return "";
   } catch {
     // fall through
   }
-  return " (the output is not a quire-outcome/1 document: check that FSL names the FSL driver)";
+  return " (the output is not a filament-outcome/1 document: check that FSL names the FSL driver)";
 }
 
 // Compare one run with the manifest. Returns { ok, message }.
