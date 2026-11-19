@@ -16,6 +16,7 @@ import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { isDeepStrictEqual } from "node:util";
 
 const STATUSES = ["running", "staged"];
 
@@ -129,16 +130,6 @@ export function runCase(dir, c, fsl) {
   return { exit: r.status ?? -1, stdout: r.stdout };
 }
 
-function driverHint(expected, stdout) {
-  if (expected === "") return "";
-  try {
-    if (JSON.parse(stdout).format === "filament-outcome/1") return "";
-  } catch {
-    // fall through
-  }
-  return " (the output is not a filament-outcome/1 document: check that FSL names the FSL driver)";
-}
-
 // Compare one run with the manifest. Returns { ok, message }.
 export function evaluateCase(c, run, expected, label = c.id) {
   if (c.status === "staged" && run.exit === c.ready_exit)
@@ -149,9 +140,38 @@ export function evaluateCase(c, run, expected, label = c.id) {
   }
   if (expected === null)
     return { ok: false, message: `${label}: expected/${c.id}.json is missing; run make record` };
-  if (run.stdout !== expected) {
-    const what = c.status === "staged" ? "staged case changed: " : "";
-    return { ok: false, message: `${label}: ${what}output differs from expected/${c.id}.json${driverHint(expected, run.stdout)}` };
+  let actual;
+  let recorded;
+  try {
+    actual = JSON.parse(run.stdout);
+  } catch {
+    return { ok: false, message: `${label}: driver output is not valid JSON` };
+  }
+  try {
+    recorded = JSON.parse(expected);
+  } catch {
+    return { ok: false, message: `${label}: expected/${c.id}.json is not valid JSON` };
+  }
+  for (const [name, doc] of [["driver output", actual], ["recorded output", recorded]]) {
+    if (!doc || doc.format !== "filament-outcome/1" || !Array.isArray(doc.items))
+      return { ok: false, message: `${label}: ${name} is not a filament-outcome/1 document` };
+  }
+  // Compare the documented outcome, allowing additional witness and axis details.
+  for (const field of ["format", "category", "last_stage", "operation", "result", "diagnostics", "artifacts"]) {
+    if (!Object.hasOwn(actual, field) || !Object.hasOwn(recorded, field) || !isDeepStrictEqual(actual[field], recorded[field]))
+      return { ok: false, message: `${label}: outcome.${field} differs from expected/${c.id}.json` };
+  }
+  if (actual.items.length !== recorded.items.length)
+    return { ok: false, message: `${label}: outcome.items.length differs from expected/${c.id}.json` };
+  for (let i = 0; i < recorded.items.length; i++) {
+    const item = actual.items[i];
+    const want = recorded.items[i];
+    if (!item || typeof item !== "object" || !want || typeof want !== "object")
+      return { ok: false, message: `${label}: outcome.items[${i}] is not an object` };
+    for (const field of ["category", "cause", "clause", "request_index", "result"]) {
+      if (!Object.hasOwn(item, field) || !Object.hasOwn(want, field) || !isDeepStrictEqual(item[field], want[field]))
+        return { ok: false, message: `${label}: outcome.items[${i}].${field} differs from expected/${c.id}.json` };
+    }
   }
   return { ok: true, message: `${label}: exit ${run.exit} ok` };
 }
