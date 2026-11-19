@@ -13,8 +13,8 @@ const steps = extractSteps(readFileSync(resolve(ROOT, "tutorial/steps.md"), "utf
 // The ids the docs pages use. A page names a step by id, so an id changes only
 // together with the page.
 const IDS = [
-  "run-checks", "run-failing-case", "break-case", "check-fails", "restore-case", "add-operation",
-  "make-models", "run-checks-after-model", "add-rule", "add-cases", "record", "run-all-checks",
+  "run-checks", "run-failing-case", "assert-failing-case", "break-case", "check-fails", "restore-case", "add-operation",
+  "make-models", "run-checks-after-model", "add-rule", "add-cases", "record", "assert-deposit-results", "run-all-checks",
 ];
 // Steps whose output the pages show.
 const WITH_OUTPUT = ["run-checks", "run-failing-case", "check-fails", "make-models", "run-checks-after-model", "record", "run-all-checks"];

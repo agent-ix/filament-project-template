@@ -13,7 +13,25 @@ make check
 Run the failing data case by hand. Exit code 10 means the rule is violated.
 
 ```bash step=run-failing-case expect-exit=10
-(cd system && fsl run requests/over-limit.json --format json)
+(cd system && "$FSL" run requests/over-limit.json --format json) | tee tutorial-over-limit-result.json
+```
+
+```bash step=assert-failing-case
+node --input-type=module <<'JS'
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+const result = JSON.parse(readFileSync('tutorial-over-limit-result.json', 'utf8'));
+assert.equal(result.format, 'filament-outcome/1');
+assert.equal(result.category, 'violation');
+assert.equal(result.last_stage, 'S6a');
+assert.deepEqual(result.diagnostics, []);
+assert.equal(result.items.length, 1);
+const [item] = result.items;
+assert.equal(item.clause, 'WithinLimit');
+assert.equal(item.result, 'refuted');
+assert.equal(item.axes.truth, 'false');
+console.log('WithinLimit is refuted by the account above its limit');
+JS
 ```
 
 ## Break a case
@@ -74,6 +92,34 @@ Record the driver output of the new cases. Read `system/expected/deposit-large.j
 
 ```bash step=record
 make record
+```
+
+Check the recorded deposit results before using them as expectations.
+
+```bash step=assert-deposit-results
+node --input-type=module <<'JS'
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+for (const [name, category, verdict, truth] of [
+  ['deposit-small', 'success', 'tested', 'true'],
+  ['deposit-large', 'violation', 'refuted', 'false'],
+]) {
+  const result = JSON.parse(readFileSync(`system/expected/${name}.json`, 'utf8'));
+  assert.equal(result.format, 'filament-outcome/1', name);
+  assert.equal(result.category, category, name);
+  assert.equal(result.last_stage, 'S6a', name);
+  assert.deepEqual(result.diagnostics, [], name);
+  assert.equal(result.items.length, 1, name);
+  const [item] = result.items;
+  assert.equal(item.clause, 'DepositWithinLimit', name);
+  assert.equal(item.category, category, name);
+  assert.equal(item.result, verdict, name);
+  assert.deepEqual(item.axes, {
+    activation: 'active', execution: 'completed', settlement: 'closed-scope', truth,
+  }, name);
+}
+console.log('The small deposit holds; the large deposit violates DepositWithinLimit');
+JS
 ```
 
 ```bash step=run-all-checks

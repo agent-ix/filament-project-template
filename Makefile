@@ -5,7 +5,7 @@ NODE ?= node
 RUN = $(NODE) tools/run.mjs
 SYSTEM = system
 
-.PHONY: check staged record models test tutorial-test tutorial-record
+.PHONY: check staged record models test tutorial-test tutorial-host-test tutorial-record
 # Run every running case and compare it with its recorded result.
 check:
 	@$(RUN) check $(SYSTEM)
@@ -31,5 +31,7 @@ IMAGE ?= ghcr.io/agent-ix/filament-toolchain:latest
 STEPS_SHELL ?= bash
 tutorial-test:
 	$(NODE) tools/steps.mjs run tutorial/steps.md --image $(IMAGE) --shell $(STEPS_SHELL) --copy . --expected tutorial/expected
+tutorial-host-test:
+	$(NODE) tools/steps.mjs run tutorial/steps.md --host --shell $(STEPS_SHELL) --copy .
 tutorial-record:
 	$(NODE) tools/steps.mjs run tutorial/steps.md --image $(IMAGE) --shell $(STEPS_SHELL) --copy . --expected tutorial/expected --record
