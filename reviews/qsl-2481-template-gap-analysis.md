@@ -3,7 +3,7 @@ id: SR-1424
 title: "Gap analysis of first-project tutorial journey assertions"
 type: SpecReview
 analysis: gap-analysis
-scope: "agent-ix/filament-project-template; QSL-2481; PR 6; Makefile, tutorial/steps.md, tutorial/tutorial.test.mjs"
+scope: "agent-ix/filament-project-template; QSL-2481; PR 6; Makefile, tutorial/steps.md, tutorial/tutorial.test.mjs, tools/run.mjs, tools/run-outcomes.test.mjs"
 review_set: subset
 ---
 
@@ -13,7 +13,7 @@ Scope is the three-file tutorial slice at frozen head 209425144129b9ad441b99566a
 
 ## Verdict
 
-**PASS for the changed assertion coverage at c6641934f015056fdd2a16ac6c71b2ab9923d91c.** The separate code-review finding is fixed; the actual current-main runtime gate remains pending. This does not assert that every documented tutorial or the gated native FSL model-author route is delivered.
+**PASS for the changed assertion coverage at 22b959729d167c3dc86fa36996f8ab5e6ba3d880.** The original finding remains fixed; actual current-main runtime validation of the changed checker remains pending. This does not assert that every documented tutorial or the gated native FSL model-author route is delivered.
 
 ## Findings
 
@@ -80,3 +80,39 @@ Plan completion: not assessed.
 
 The confined fix preserves the public tutorial oracles. Restoring the plain fsl invocation repairs the standalone reader path; the host Make entry selects the configured shared binary for the existing runner. The deposit test still requires the intended clause, category, verdict, stage, diagnostics, activation, execution and truth. Removing the unpromised closed-scope settlement assumption follows the supplied FR-521 fact that settlement is independent of truth, rather than weakening an intended tutorial outcome. No additional finding arose from this correction. Accepted the reported shared current-main CLI build; the lead still owns the final actual tutorial gate. No tests, builds, matrix, ticket metadata rechecks or full review sweep were repeated.
 
+
+## Disposition Round 2
+
+Inspected only tools/run.mjs and the added tools/run-outcomes.test.mjs at 22b959729d167c3dc86fa36996f8ab5e6ba3d880. The initial host gate is accepted as a failure at four raw-JSON mismatches before a completed step; its output was not saved, so this review makes no claim that those live outputs had correct semantic values. The old golden documents were left unchanged.
+
+The replacement parses both documents, requires filament-outcome/1 and an items array, checks presence and deep structural equality of every recorded root format/category/stage/operation/result/diagnostics/artifacts field, preserves item count, and requires category/cause/clause/request_index/result in each item. Existing exit and staged-readiness checks remain in place. All four existing cases still bind their required clauses and tested/refuted verdicts. Additional item axes/witness data are not part of these four old recorded oracles; the separate tutorial assertions continue to check the required activation, execution and truth for their taught outcomes. No promised field in the current four fixtures is discarded. Formatting differences no longer masquerade as a language failure.
+
+The five new pure-function unit cases exercise acceptance with additional detail and failure for changed clause, verdict, malformed documents and all four wrong exits. Accepted the reported five passing unit tests without rerunning them. No product, golden, steps-runner, framework, fallback or compatibility behavior changed. FND-001 remains fixed; no new material finding arose from this confined change. No tests, builds, matrix, metadata rechecks or full review sweep were performed. The lead must execute the justified final actual journey gate against this changed checker. Plan completion: not assessed.
+
+```json
+{
+  "round": 2,
+  "dispositions": [],
+  "new_findings": [],
+  "scope": [
+    {
+      "id": "evaluateCase",
+      "path": "tools/run.mjs:134-178",
+      "role": "examined",
+      "excerpt": "for (const field of [\"format\", \"category\", \"last_stage\", \"operation\", \"result\", \"diagnostics\", \"artifacts\"]) {\n    if (!Object.hasOwn(actual, field) || !Object.hasOwn(recorded, field) || !isDeepStrictEqual(actual[field], recorded[field]))"
+    },
+    {
+      "id": "evaluateCase-item-oracle",
+      "path": "tools/run.mjs:164-176",
+      "role": "examined",
+      "excerpt": "if (actual.items.length !== recorded.items.length)\n    return { ok: false, message: `${label}: outcome.items.length differs from expected/${c.id}.json` };\nfor (const field of [\"category\", \"cause\", \"clause\", \"request_index\", \"result\"]) {"
+    },
+    {
+      "id": "run-outcomes-unit-cases",
+      "path": "tools/run-outcomes.test.mjs",
+      "role": "examined",
+      "excerpt": "all four tutorial outcomes retain their clause and verdict when witness details are added; a different clause fails; a different verdict fails; malformed or incomplete outcome documents fail without throwing; all four promised exit codes remain mandatory"
+    }
+  ]
+}
+```
