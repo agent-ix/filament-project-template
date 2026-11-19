@@ -13,7 +13,7 @@ make check
 Run the failing data case by hand. Exit code 10 means the rule is violated.
 
 ```bash step=run-failing-case expect-exit=10
-(cd system && "$FSL" run requests/over-limit.json --format json) | tee tutorial-over-limit-result.json
+(cd system && fsl run requests/over-limit.json --format json) | tee tutorial-over-limit-result.json
 ```
 
 ```bash step=assert-failing-case

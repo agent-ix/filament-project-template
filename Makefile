@@ -32,6 +32,6 @@ STEPS_SHELL ?= bash
 tutorial-test:
 	$(NODE) tools/steps.mjs run tutorial/steps.md --image $(IMAGE) --shell $(STEPS_SHELL) --copy . --expected tutorial/expected
 tutorial-host-test:
-	$(NODE) tools/steps.mjs run tutorial/steps.md --host --shell $(STEPS_SHELL) --copy .
+	PATH="$$(dirname "$(FSL)"):$$PATH" $(NODE) tools/steps.mjs run tutorial/steps.md --host --shell $(STEPS_SHELL) --copy .
 tutorial-record:
 	$(NODE) tools/steps.mjs run tutorial/steps.md --image $(IMAGE) --shell $(STEPS_SHELL) --copy . --expected tutorial/expected --record
