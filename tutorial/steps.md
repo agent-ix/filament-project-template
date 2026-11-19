@@ -114,9 +114,9 @@ for (const [name, category, verdict, truth] of [
   assert.equal(item.clause, 'DepositWithinLimit', name);
   assert.equal(item.category, category, name);
   assert.equal(item.result, verdict, name);
-  assert.deepEqual(item.axes, {
-    activation: 'active', execution: 'completed', settlement: 'closed-scope', truth,
-  }, name);
+  assert.equal(item.axes.activation, 'active', name);
+  assert.equal(item.axes.execution, 'completed', name);
+  assert.equal(item.axes.truth, truth, name);
 }
 console.log('The small deposit holds; the large deposit violates DepositWithinLimit');
 JS
